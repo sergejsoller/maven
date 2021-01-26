@@ -33,7 +33,6 @@
     <version>0.1</version>
 
     <properties>
-        <github.global.server>github</github.global.server>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <unirest.version>1.4.9</unirest.version>
@@ -44,17 +43,11 @@
 
     <distributionManagement>
         <repository>
-            <id>internal.repo</id>
+            <id>local.repo</id>
             <name>Temporary Staging Repository</name>
             <url>file://${project.build.directory}/mvn-repo</url>
         </repository>
     </distributionManagement>
-
-    <scm>
-        <connection>scm:git:github.com:sergejsoller/mailerlite-java-api.git</connection>
-        <developerConnection>scm:git:github.com:sergejsoller/mailerlite-java-api.git</developerConnection>
-        <url>https://github.com/sergejsoller/mailerlite-java-api</url>
-    </scm>
 
     <dependencies>
         <dependency>
@@ -92,32 +85,8 @@
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>2.8.2</version>
                 <configuration>
-                    <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+                    <altDeploymentRepository>local.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-                <version>0.11</version>
-                <configuration>
-                    <message>Maven artifacts for ${project.version}</message>
-                    <noJekyll>true</noJekyll>
-                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
-                    <branch>refs/heads/mvn-repo</branch>
-                    <includes><include>**/*</include></includes>
-                    <repositoryName>mailerlite-java-api</repositoryName>
-                    <repositoryOwner>sergejsoller</repositoryOwner>
-                    <server>github</server>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>site</goal>
-                        </goals>
-                        <phase>deploy</phase>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
